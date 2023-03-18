@@ -5,7 +5,7 @@
 	import { Player, Dealer } from '$lib/player';
 	let deck = new Deck();
 	const TWENTY_ONE = 21;
-	let player = new Player('Kade', deck);
+	let player = new Player('Player', deck);
 	let dealer = new Dealer('Dealer', deck);
 	$: player_score = player.calcScore();
 	$: dealer_score = dealer.calcScore();
@@ -36,7 +36,7 @@
 		if (player_score > TWENTY_ONE) {
 			result = {
 				status: true,
-				message: 'Player Bust'
+				message: `${player.name} Busts`
 			};
 		}
 		if (player_score === TWENTY_ONE && dealer_score === TWENTY_ONE) {
@@ -52,11 +52,10 @@
 			dealer_score = dealer.calcScore();
 		}
 		if (dealer_score > TWENTY_ONE) {
-			console.log(`player score :${player_score} Dealer score ${dealer_score}`);
 			player.bag += bet_amt * 5;
 			result = {
 				status: true,
-				message: 'Dealer Busts, Player Wins!'
+				message: `Dealer Busts, ${player.name} Wins!`
 			};
 		} else if (dealer_score < player_score) {
 			if (player_score === 21) {
@@ -66,7 +65,7 @@
 			}
 			result = {
 				status: true,
-				message: 'Player Wins'
+				message: `${player.name} Wins`
 			};
 		} else if (player_score < dealer_score) {
 			result = {
