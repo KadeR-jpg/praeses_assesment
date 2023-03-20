@@ -1,8 +1,17 @@
 <script lang="ts">
 	import RenderCard from '../Components/Card.svelte';
+	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { Deck } from '$lib/deck';
 	import { Player, Dealer } from '$lib/player';
+	let isMobile: boolean;
+	onMount(() => {
+		if ('ontouchstart' in document.documentElement) {
+			isMobile = true;
+		} else {
+			isMobile = false;
+		}
+	});
 	let deck = new Deck();
 	const TWENTY_ONE = 21;
 	let player = new Player('Player', deck);
@@ -82,11 +91,22 @@
 	}
 	let stand: boolean = false;
 	$: hover_color = player_score >= 18 ? 'red' : 'green';
-	console.log(hover_color);
-
 	let rotation_array = [0, 15, 30, 45, 60, 75, 90];
 </script>
 
+{#if isMobile}
+	<div class="absolute z-10 flex h-screen w-screen flex-col bg-white">
+		<h1 class="pt-2 text-center text-3xl">
+			Site is not optimized for mobile, please use a desktop browser for a better experience
+		</h1>
+		<button
+			on:click={(event) => {
+				isMobile = false;
+			}}
+			class="m-auto rounded-lg bg-red-500 p-4 font-semibold text-white">Show me Anyways</button
+		>
+	</div>
+{/if}
 {#if result.status == true}
 	<div
 		class="absolute inset-0 z-10 flex h-screen w-screen flex-col items-center justify-around bg-white/90 backdrop-blur-xl"
@@ -194,7 +214,6 @@
 					on:click={(event) => {
 						player.bag -= 5;
 						bet_amt += 1;
-						console.log(bet_amt);
 					}}>Bet 5</button
 				>
 			</div>

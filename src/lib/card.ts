@@ -31,13 +31,13 @@ export class Card {
 	getFace(): string {
 		switch (Suit[this.suit]) {
 			case 'Spades':
-				return '♠️';
+				return '♠';
 			case 'Hearts':
-				return '♥️';
+				return '♥';
 			case 'Diamonds':
-				return '♦️';
+				return '♦';
 			case 'Clubs':
-				return '♣️';
+				return '♣';
 			default:
 				throw new Error('Unhandled Suit case');
 		}
